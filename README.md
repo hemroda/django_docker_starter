@@ -41,6 +41,12 @@ Create an empty folder with the apps name first in `backend/apps/name_of_the_app
 `$ docker-compose run --rm app sh -c "python manage.py migrate"`
 
 
+#### Run tests
+
+Run `$ docker-compose run --rm app sh -c "python manage.py test apps/*"` for all the tests.  
+Or run `$ docker-compose run --rm app sh -c "python manage.py test apps/name_of_the_app"` for specif app.
+
+
 ## Locally test deployment (prod)
 
 ```
