@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +7,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Django Docker Starter</title>
+  <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
   <header>
-    <div class="logo-wrapper"></div>
+    <div class="logo-wrapper">
+      <a href="{% url 'website_homepage_path' %}">
+        <h1>Django Docker Starter</h1>
+      </a>
+    </div>
     <nav>
       <ul>
-        <li><a href="{% url 'website_homepage_path' %}">Home</a></li>
         <li><a href="{% url 'blog_index_path' %}">Blog</a></li>
         <li><a href="{% url 'website_about_path' %}">About</a></li>
       </ul>
@@ -21,5 +28,7 @@
     {% block content %} {% endblock content %}
   </main>
   <footer></footer>
+
+  <script src="{% static 'js/index.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #5d5d5d;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+
+/*
+  HEADER
+*/
+header {
+  width: 100%;
+  border-bottom: 1px solid #5d5d5d;
+}
+
+header .logo-wrapper h1 {
+  padding: 15px;
+}
+
+header nav ul {
+  width: 250px;
+}
+
+header nav ul li {
+  margin-right: 20px;
+}
+
+main {
+  padding: 50px 5px 5px 5px;
+}
+
+
+/* --------------------------------------
+ Tablet
+ -------------------------------------- */
+@media (min-width: 767px) {
+}
+
+
+/* --------------------------------------
+  Desktop
+ -------------------------------------- */
+@media screen and (min-width: 1180px) {
+  body {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+}
