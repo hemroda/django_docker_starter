@@ -66,9 +66,26 @@ $ docker-compose -f docker-compose-deploy.yml up
 
 `$ docker-compose -f docker-compose-deploy.yml run --rm app sh -c "python manage.py createsuperuser"`
 
-## Deploying in Rpod
+## Deploying in Prod
+
+### Deploying in Prod for the first time
+❗️❗️❗️ After cloning the project on the production server, cd into `cloudcruder` folder and:
+
+```sh
+$ cp .env.sample .env
+```
+
+Then update the everything except the `DB_USER` value.
+
+Now you can run the app:
+```
+$ docker-compose -f docker-compose-deploy.yml up -d
+```
+
+### Deploying in Prod for updates
 
 * SSH to the server.
+* cd into `cloudcruder` folder
 * Pull the changes, run `$ git pull origin`
 * Run the following commands:
 
