@@ -4,6 +4,14 @@
   color: #5d5d5d;
 }
 
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -17,6 +25,7 @@
 
 /*
   HEADER
+  --------------------------------------
 */
 header {
   width: 100%;
@@ -27,14 +36,44 @@ header .logo-wrapper h1 {
   padding: 15px;
 }
 
-header nav ul {
-  width: 250px;
+header .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  padding-left: 10px;
+  width: 100%;
 }
 
-header nav ul li {
-  margin-right: 20px;
+header .mobile-burger-menu {
+  cursor: pointer;
 }
 
+header .nav-links {
+  position: fixed;
+  width: 94%;
+  top: 55px;
+  left: 12px;
+  background-color: #ffffff;
+  padding-top: 20px;
+  border-bottom: 1px solid #5d5d5d;
+}
+
+header .nav-links a {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+}
+
+header .nav-links a:hover {
+  background-color: #6b0f03;
+  color: white;
+}
+
+/*
+  MAIN
+  --------------------------------------
+*/
 main {
   padding: 50px 5px 5px 5px;
 }
@@ -54,5 +93,25 @@ main {
   body {
     max-width: 1180px;
     margin: 0 auto;
+  }
+  header .nav-links {
+    display: block;
+    position: static;
+    width: auto;
+  }
+
+  header .nav-links a {
+    display: inline-block;
+    padding: 15px 20px;
+  }
+
+  header .nav-links.hidden {
+    display: block;
+    border-bottom: none;
+    padding-top: 0;
+  }
+
+  header .mobile-burger-menu {
+    display: none;
   }
 }
