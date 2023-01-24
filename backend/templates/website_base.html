@@ -11,14 +11,16 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
-  <header>
+  <header class="flex-row space-between">
+    <!-- Logo -->
     <div class="logo-wrapper">
       <a href="{% url 'website_homepage_path' %}">
         <h1>Django Docker Starter</h1>
       </a>
     </div>
+    <!-- Nav links -->
     <nav>
-      <ul>
+      <ul class="flex-row">
         <li><a href="{% url 'blog_index_path' %}">Blog</a></li>
         <li><a href="{% url 'website_about_path' %}">About</a></li>
       </ul>
