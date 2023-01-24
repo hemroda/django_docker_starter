@@ -21,6 +21,11 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # ACCOUNTS
+    # ------------------------------------------
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/", include("apps.accounts.urls")),
+
     # WEBSITE
     # ------------------------------------------
     path("", include("apps.website.urls")),
