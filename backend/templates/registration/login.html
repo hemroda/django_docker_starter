@@ -1,30 +1,12 @@
 {% extends "website_base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <div class="">
     <form method="post">{% csrf_token %}
-      <div>
-        <div class="">
-          <div>
-            <input
-              type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username"
-                   maxlength="150" required="true" id="id_username" placeholder="your@email.com"
-              class="">
-          </div>
-          <div class="mt-4">
-            <input
-              type="password" name="password" autocomplete="current-password" required="true" id="id_password"
-              placeholder="password"
-              class="">
-          </div>
-        </div>
-      </div>
-      <button
-        type="submit"
-        class="">
-        Log In
-      </button>
-      <input type="hidden" name="next" value="{{ next }}">
+      {{ form|crispy }}
+      <button class="" type="submit">Log In</button>
     </form>
+    <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
   </div>
 {% endblock content %}
