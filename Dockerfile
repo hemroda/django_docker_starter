@@ -21,4 +21,4 @@ USER appuser
 
 ENV PATH="/venv/bin:$PATH"
 
-CMD ["/venv/bin/uwsgi", "--socket", ":9000", "--workers", "4", "--master", "--enabled-threads", "--module", "app.wsgi"]
+CMD ["/venv/bin/uwsgi", "--socket", ":9000", "--workers", "4", "--master", "--enable-threads", "--module", "app.wsgi"]
