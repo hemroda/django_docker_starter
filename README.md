@@ -30,7 +30,7 @@ Enjoy the headaches 😁
 
 ### Create apps
 
-Create an empty folder with the apps name first in `backend/apps/name_of_the_app` then run:  
+Create an empty folder with the apps name first in `app/apps/name_of_the_app` then run:
 
 ```sh
 ❯ docker-compose run --rm app sh -c "python manage.py startapp name_of_the_app ./apps/name_of_the_app"
@@ -56,7 +56,7 @@ Create an empty folder with the apps name first in `backend/apps/name_of_the_app
 
 ### Run tests
 
-To run all the tests.  
+To run all the tests.
 
 ```sh
 ❯ docker-compose run --rm app sh -c "python manage.py test apps/*"
