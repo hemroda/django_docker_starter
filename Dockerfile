@@ -1,33 +1,19 @@
-FROM python:3.11.1-alpine3.17
-
-LABEL maintainer="django_docker_starter.com"
+FROM python:3.12.4-alpine3.20
 
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-COPY ./backend /backend
-COPY ./scripts /scripts
 
-WORKDIR /backend
+RUN apk add --upgrade --no-cache build-base linux-headers && \
+    pip install --upgrade pip && \
+    pip install -r /requirements.txt
 
-EXPOSE 8000
+COPY app/ /app
 
-RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client && \
-    apk add --update --no-cache --virtual .tmp-deps \
-        build-base postgresql-dev musl-dev linux-headers && \
-    /py/bin/pip install -r /requirements.txt && \
-    apk del .tmp-deps && \
-    adduser --disabled-password --no-create-home appuser && \
-    mkdir -p /vol/web/static && \
-    mkdir -p /vol/web/media && \
-    chown -R appuser:appuser /vol && \
-    chmod -R 755 /vol && \
-    chmod -R +x /scripts
+WORKDIR /app
 
-ENV PATH="/scripts:/py/bin:$PATH"
+RUN adduser --disabled-password --no-create-home appuser
 
 USER appuser
 
-CMD ["run.sh"]
+CMD ["uwsgi", "--socket", ":9000", "--workers", "4", "--master", "--enabled-threads", "--module", "app.wsgi"]
