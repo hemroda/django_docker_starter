@@ -15,7 +15,7 @@ COPY app/ /app
 WORKDIR /app
 
 RUN adduser --disabled-password --no-create-home appuser && \
-    chown -R appuser:appuser /app
+    chown -R appuser:appuser /app /venv
 
 USER appuser
 

@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # External Library
+    "django_bootstrap5",
+    "django_bootstrap_icons",
+    "django_htmx",
+    # Apps
+    "apps.website.apps.WebsiteConfig",
 ]
 
 MIDDLEWARE = [

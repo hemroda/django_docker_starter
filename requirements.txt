@@ -1,2 +1,7 @@
+asgiref==3.8.1
 Django==5.0.7
+django-bootstrap5==24.2
+django-bootstrap-icons==0.8.7
+django-htmx==1.18.0
+sqlparse==0.5.1
 uWSGI==2.0.26
