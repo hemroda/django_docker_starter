@@ -90,10 +90,9 @@ Or run the following for a specif app in the project.
 
 ```sh
 ❯ cp .env.sample .env
-❯ cp .env.sample .app/.env
 ```
 
-Then update the everything except the `DB_USER` value.
+Then update everything except the `DB_USER` value.
 
 Now you can run the app:
 
