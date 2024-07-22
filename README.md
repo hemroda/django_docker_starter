@@ -88,10 +88,9 @@ Or run the following for a specif app in the project.
 
 ### Deploying in Prod for the first time
 
-❗️❗️❗️ After cloning the project on the production server, cd into `cloudcruder` folder and:
-
 ```sh
 ❯ cp .env.sample .env
+❯ cp .env.sample .app/.env
 ```
 
 Then update the everything except the `DB_USER` value.
