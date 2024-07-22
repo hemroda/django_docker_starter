@@ -10,7 +10,7 @@ RUN apk add --upgrade --no-cache build-base linux-headers python3-dev && \
     /venv/bin/pip install -r /requirements.txt && \
     apk del build-base linux-headers python3-dev
 
-COPY app/ /app
+COPY . /app
 
 WORKDIR /app
 
