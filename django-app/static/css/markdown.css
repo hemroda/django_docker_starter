@@ -1,0 +1,177 @@
+/* Markdown content container */
+.markdown-content {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Headings */
+.markdown-content h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.6em;
+  border-bottom: 2px solid #eaecef;
+  padding-bottom: 0.3em;
+}
+
+.markdown-content h2 {
+  font-size: 2em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+}
+
+.markdown-content h3 {
+  font-size: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-content h4 {
+  font-size: 1.25em;
+  margin-top: 0.8em;
+  margin-bottom: 0.4em;
+}
+
+/* Paragraphs and text */
+.markdown-content p {
+  margin-bottom: 1em;
+}
+
+/* Lists */
+.markdown-content ul,
+.markdown-content ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.markdown-content li {
+  margin: 0.5em 0;
+}
+
+.markdown-content ul li {
+  list-style-type: disc;
+}
+
+.markdown-content ol li {
+  list-style-type: decimal;
+}
+
+/* Code blocks */
+.markdown-content pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.markdown-content code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-content pre code {
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+  margin: 1em 0;
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+/* Links */
+.markdown-content a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+/* Images */
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Specific styling for images by targeting their alt attribute */
+/*
+E.G:
+![Drag Racing](https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg)
+*/
+/*.markdown-content img[alt="Drag Racing"] {*/
+/*    max-width: 500px;*/
+/*    display: block;*/
+/*    margin: 2em auto;*/
+/*    border: 3px solid #eaeaea;*/
+/*    border-radius: 12px;*/
+/*    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);*/
+/*}*/
+
+.markdown-content img:hover {
+  transform: scale(1.02);
+}
+
+/* Tables */
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-content table th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+}
+
+.markdown-content table tr:nth-child(2n) {
+  background-color: #f8f9fa;
+}
+
+/* Horizontal rule */
+.markdown-content hr {
+  height: 2px;
+  background-color: #e1e4e8;
+  border: 0;
+  margin: 24px 0;
+}
+
+/* Inline elements */
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+/* Task lists */
+.markdown-content .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-content .task-list-item input[type="checkbox"] {
+  margin: 0 0.5em 0 -1.6em;
+}

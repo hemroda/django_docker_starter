@@ -1,106 +1,193 @@
-# Django Docker Starter
+# django_docker_starter
 
-## Setting up the app
+A repo to kickstart your Django Project
 
-Clone the repo.
+## Technologies
 
-First run:
+| Backend | Frontend   | DevOps    | Data       | Project Management | Tools |
+|---------|------------|-----------|------------|--------------------|-------|
+| Python  | HTMX       | Docker    | PostgreSQL | GitHub             | uv    |
+| Django  | JavaScript | CI/CD     | SQLAlchemy |                    | npm   |
+| Pytest  | CSS        | Terraform | pgAdmin    |                    |       |
+|         | HTML5      | Hetzner   |            |                    |       |
+|         |            |           |            |                    |       |
 
-```sh
-❯ docker-compose build
-```
+### TODO
 
-## Running the app
+Change:
+* Search and replace `your-url.com;` with your URL.
+* Search and replace `django_docker_starter` with your project's name.
+* Change `main.tf` if you are not deploying on Hetzner.
 
-```sh
-❯ docker-compose up
-```
-
-Open a browser to `http://127.0.0.1:8000/`
-
-Enjoy the headaches 😁
-
-## How to
-
-### Create a Superuser
+## DEV
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py createsuperuser"
+git clone git@github.com:hemroda/django_docker_starter.git
 ```
 
-### Create apps
-
-Create an empty folder with the apps name first in `backend/apps/name_of_the_app` then run:  
+* Install [uv](https://github.com/astral-sh/uv)
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py startapp name_of_the_app ./apps/name_of_the_app"
+# On macOS and Linux.
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### Makemigrations
+* Environment variables
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py makemigrations"
+cp .env.sample .env
+cp ./django-app/.env.sample ./django-app/.env
+cp ./fastapi-api/.env.sample ./fastapi-api/.env
 ```
 
-### Run Migrations
+* Build the project using Docker
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py migrate"
+docker-compose up -d --build
 ```
 
-### Open the shell
+==> For Django, go to [http://localhost:8080](http://localhost:8080)
+==> For FastAPI, go to [http://localhost:8000](http://localhost:8000)
+
+* Pre-commit
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py shell"
+pip install pre-commit
 ```
 
-### Run tests
+### DJANGO
 
-To run all the tests.  
+⚠️ Make sure you are in the `django-app` directory.
+
+#### Install new package
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py test apps/*"
+uv add name-of-package
+uv add name-of-package --dev
 ```
 
-Or run the following for a specif app in the project.
+#### Migrations
+
+* List the migrations
 
 ```sh
-❯ docker-compose run --rm app sh -c "python manage.py test apps/name_of_the_app"
+docker-compose exec django-app python manage.py showmigrations
 ```
 
-## Locally test deployment (prod)
+* If your changes are not listed, create a migration file for it
 
 ```sh
-❯ docker-compose -f docker-compose-deploy.yml down --volumes
-❯ docker-compose -f docker-compose-deploy.yml build
-❯ docker-compose -f docker-compose-deploy.yml up
+docker-compose exec django-app python manage.py makemigrations
 ```
 
-❗️Don't forget to kill the "prod" volumes after testing. (Run the first command)
-
-### Create a Superuser when locally testing deployment (prod)
+* Run the migrations
 
 ```sh
-❯ docker-compose -f docker-compose-deploy.yml run --rm app sh -c "python manage.py createsuperuser"
+docker-compose exec django-app python manage.py migrate --noinput
 ```
 
-## Deploying in Prod
+⚠️ If you try to make your migration files and nothing happens chances are that you created a new model in a `models`
+folder. which means you need to add the newly created model to the imports in `the_app/models/__init__.py` file.
 
-### Deploying in Prod for the first time
+Example in `django-app/apps/app-name`, you just created the `Task` model, you would add it this way:
 
-❗️❗️❗️ After cloning the project on the production server, cd into `cloudcruder` folder and:
+```py
+from .project import Project
+from .task import Task
+
+__all__ = ["Project", "Task"]
+```
+
+Now re-run the 2 commands above.
+
+* Ensure the default Django tables were created:
+
+See [Database](#database) section bellow.
+
+#### Access the shell
 
 ```sh
-❯ cp .env.sample .env
+docker-compose exec django-app python manage.py shell_plus
 ```
 
-Then update the everything except the `DB_USER` value.
+#### Create new Django app
 
-Now you can run the app:
+⚠️ Make sure you create the folder for the new app, then:
 
 ```sh
-❯ docker-compose -f docker-compose-deploy.yml up -d
+mkdir apps/name_of_the_app
+docker-compose exec django-app python manage.py startapp name_of_the_app ./apps/name_of_the_app
 ```
+
+#### Create a Superuser
+
+```sh
+docker-compose run --rm django-app sh -c "python manage.py createsuperuser"
+```
+
+#### Test accounts:
+
+There few accounts created during the seed process:
+
+* For admin section:
+
+  url: [http://localhost:8080/admin](http://localhost:8080/admin)
+
+  username: `admin`
+
+  password: `password`
+
+* For non superuser (accounts):
+
+  url: [http://localhost:8080/login](http://localhost:8080/login)
+
+  username: `seconduser`
+
+  password: `password`
+
+These logins are usable in development.
+
+### Database
+
+#### Access the database from the CLI:
+
+```sh
+docker-compose exec db psql --username=pguser --dbname=django_docker_starter_db
+```
+
+#### Access pgAdmin
+
+Go to `http://localhost:4000/login`
+
+Use the following logins:
+
+    - user/email: admin@users.com
+
+    - password: adminpassword
+
+When creating the server:
+
+- General tab:
+
+        - name: server
+
+  - Connection tab:
+
+    - Host name/address: db
+
+    - Username: pguser
+
+    - Password: pguserpassword
+
+    ⚠️ The other fields do not change
+
+## PRODUCTION
+
+### TODO
+
+Before First deploy:
+
+* Search and replace `your-email@example.co` with your email.
 
 ### Deploying in Prod for updates
 
@@ -110,6 +197,17 @@ Now you can run the app:
 * Run the following commands:
 
 ```sh
-❯ docker-compose -f docker-compose-deploy.yml build app
-❯ docker-compose -f docker-compose-deploy.yml up --no-deps -d app
+docker-compose -f docker-compose-prod.yml up -d --build
+```
+
+If only `django-app` was updated, run:
+
+```sh
+docker-compose -f docker-compose-prod.yml up -d --build django-app
+```
+
+### Create a Superuser
+
+```sh
+docker-compose exec django-app python manage.py createsuperuser
 ```

@@ -1,0 +1,23 @@
+{% extends "accounts/authentication/authentication_base.html" %}
+{% load static %}
+{% block title %}
+    Register - django_docker_starter
+{% endblock title %}
+{% block content %}
+    <div class="mx-auto text-center pt-40">
+        <h2 class="mb-10">Register</h2>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post" class="max-w-sm mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-default w-full mt-8">Register</button>
+        </form>
+        <p class="mt-14">
+            Already have an account? <a href="{% url 'accounts_login_path' %}" class="link">Login here</a>
+        </p>
+    </div>
+{% endblock content %}
