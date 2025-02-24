@@ -1,0 +1,15 @@
+{
+  "name": "django_docker_starter",
+  "version": "1.0.0",
+  "description": "One repo to rule them all 🤓",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

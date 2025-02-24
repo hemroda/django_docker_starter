@@ -1,0 +1,7 @@
+<p class="flex items-center gap-2 mt-4">
+    <label {% if id %}for="{{ id }}"{% endif %}>{{ widget.label }}</label>
+    <input type="checkbox"
+           name="{{ widget.name }}"
+           {% if widget.value != None %}value="{{ widget.value|stringformat:'s' }}"{% endif %}
+           {% include "django/forms/widgets/attrs.html" %}>
+</p>

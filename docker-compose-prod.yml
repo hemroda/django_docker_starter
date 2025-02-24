@@ -1,0 +1,161 @@
+services:
+  django-app:
+    build:
+      context: ./django-app
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:8000"
+    env_file:
+      - ./django-app/.env
+    environment:
+      - VIRTUAL_HOST=your-url.com
+      - VIRTUAL_PORT=8000
+      - LETSENCRYPT_HOST=your-url.com
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
+    volumes:
+      - django_static:/app/django-app/staticfiles
+      - django_media:/app/django-app/mediafiles
+    depends_on:
+      db:
+        condition: service_healthy
+
+  fastapi-api:
+    build:
+      context: ./fastapi-api
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8081:8000"
+    env_file:
+      - ./fastapi-api/.env
+    environment:
+      - VIRTUAL_HOST=your-url.com
+      - VIRTUAL_PATH=/api
+      - VIRTUAL_PORT=8000
+      - LETSENCRYPT_HOST=your-url.com
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  notes-app:
+    build:
+      context: notes-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./notes-app/.env
+    volumes:
+      - ./notes-app:/app
+    environment:
+      - VIRTUAL_HOST=your-url.com
+      - VIRTUAL_PATH=/notes
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=your-url.com
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
+    depends_on:
+      db:
+        condition: service_healthy
+
+  blog-app:
+    build:
+      context: blog-app
+      dockerfile: Dockerfile
+    ports:
+      - "3080:3080"
+    env_file:
+      - ./blog-app/.env
+    volumes:
+      - ./blog-app:/app
+    environment:
+      - VIRTUAL_HOST=your-url.com
+      - VIRTUAL_PATH=/blog
+      - VIRTUAL_PORT=3080
+      - LETSENCRYPT_HOST=your-url.com
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    environment:
+      PGDATA: /var/lib/postgresql/data/
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U pguser -d django_docker_starter_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    shm_size: "2gb"
+
+  pgadmin4:
+    image: elestio/pgadmin:latest
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      PGADMIN_LISTEN_PORT: 80
+      GUNICORN_TIMEOUT: 300
+    ports:
+      - "4000:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "wget", "-O-", "http://localhost:80/misc/ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    build: nginx
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - django_static:/app/django-app/staticfiles:rw
+      - django_media:/app/django-app/mediafiles:rw
+      - certs:/etc/nginx/certs:ro
+      - html:/usr/share/nginx/html:rw
+      - vhost:/etc/nginx/vhost.d:rw
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - django-app
+      - fastapi-api
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    env_file:
+      - ./.env.prod.proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - acme:/etc/acme.sh
+    depends_on:
+      - nginx-proxy
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  django_static:
+  django_media:
+  certs:
+  html:
+  vhost:
+  acme:

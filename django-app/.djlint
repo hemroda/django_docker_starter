@@ -1,0 +1,5 @@
+{
+    "profile": "django",
+    "ignore": ["H006", "H023"]
+    "indent": 2
+}

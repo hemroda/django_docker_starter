@@ -1,0 +1,16 @@
+{% extends "website_base.html" %}
+{% load static %}
+{% block title %}
+    django_docker_starter
+{% endblock title %}
+{% block content %}
+    <div>
+        <p>About us...</p>
+        {% if user.is_authenticated %}
+            <div>
+                <p>You are already signed in 😉</p>
+            </div>
+        {% else %}
+        {% endif %}
+    </div>
+{% endblock content %}

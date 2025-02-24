@@ -1,0 +1,22 @@
+{% extends "accounts/authentication/authentication_base.html" %}
+{% load static %}
+{% block title %}
+    Login - django_docker_starter
+{% endblock title %}
+{% block content %}
+    <div class="mx-auto text-center pt-40">
+        <h2 class="mb-10">Login</h2>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post" class="max-w-sm mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button type="submit" class="btn-default w-full mt-8">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
