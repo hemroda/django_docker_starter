@@ -37,7 +37,6 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```sh
 cp .env.sample .env
 cp ./django-app/.env.sample ./django-app/.env
-cp ./fastapi-api/.env.sample ./fastapi-api/.env
 ```
 
 * Build the project using Docker
@@ -47,7 +46,6 @@ docker-compose up -d --build
 ```
 
 ==> For Django, go to [http://localhost:8080](http://localhost:8080)
-==> For FastAPI, go to [http://localhost:8000](http://localhost:8000)
 
 * Pre-commit
 

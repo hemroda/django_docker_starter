@@ -73,7 +73,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - django-app
-      - fastapi-api
 
   acme-companion:
     image: nginxproxy/acme-companion

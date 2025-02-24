@@ -145,7 +145,7 @@ def get_oauth_token(request):
     )
 
 
-# What django-app returns to fastapi-api
+# What django-app returns to your api
 @require_http_methods(["GET"])
 def validate_token(request):
     if request.user.is_authenticated:

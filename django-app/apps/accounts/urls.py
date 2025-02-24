@@ -9,6 +9,6 @@ urlpatterns = [
     path("logout/", views.logout_view, name="accounts_logout_path"),
     path("profile/", views.profile, name="accounts_profile_path"),
     path("get-token/", views.get_oauth_token, name="get_token"),
-    # path bellow is used in FastAPI
+    # path bellow can be used in API authentication
     path("validate-token/", views.validate_token, name="validate_token"),
 ]
