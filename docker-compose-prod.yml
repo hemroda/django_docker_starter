@@ -20,68 +20,6 @@ services:
       db:
         condition: service_healthy
 
-  fastapi-api:
-    build:
-      context: ./fastapi-api
-      dockerfile: Dockerfile.prod
-    ports:
-      - "8081:8000"
-    env_file:
-      - ./fastapi-api/.env
-    environment:
-      - VIRTUAL_HOST=your-url.com
-      - VIRTUAL_PATH=/api
-      - VIRTUAL_PORT=8000
-      - LETSENCRYPT_HOST=your-url.com
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
-    depends_on:
-      db:
-        condition: service_healthy
-
-
-  notes-app:
-    build:
-      context: notes-app
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./notes-app/.env
-    volumes:
-      - ./notes-app:/app
-    environment:
-      - VIRTUAL_HOST=your-url.com
-      - VIRTUAL_PATH=/notes
-      - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=your-url.com
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
-    depends_on:
-      db:
-        condition: service_healthy
-
-  blog-app:
-    build:
-      context: blog-app
-      dockerfile: Dockerfile
-    ports:
-      - "3080:3080"
-    env_file:
-      - ./blog-app/.env
-    volumes:
-      - ./blog-app:/app
-    environment:
-      - VIRTUAL_HOST=your-url.com
-      - VIRTUAL_PATH=/blog
-      - VIRTUAL_PORT=3080
-      - LETSENCRYPT_HOST=your-url.com
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-      - CSRF_TRUSTED_ORIGINS=https://giaco.xyz
-    depends_on:
-      db:
-        condition: service_healthy
-
   db:
     image: postgres:16-alpine
     volumes:

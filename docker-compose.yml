@@ -16,56 +16,6 @@ services:
       db:
         condition: service_healthy
 
-  fastapi-api:
-    build:
-      context: ./fastapi-api
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./fastapi-api/.env
-    volumes:
-      - ./fastapi-api:/app
-    depends_on:
-      db:
-        condition: service_healthy
-
-  notes-app:
-    build:
-      context: notes-app
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./notes-app/.env
-    volumes:
-      - ./notes-app:/app
-
-  blog-app:
-    build:
-      context: blog-app
-      dockerfile: Dockerfile
-    ports:
-      - "3080:3080"
-    env_file:
-      - ./blog-app/.env
-    volumes:
-      - ./blog-app:/app
-
-  nuxt-app:
-    build:
-      context: nuxt-app
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    env_file:
-      - nuxt-app/.env
-    volumes:
-      - ./nuxt-app:/app
-      - /app/node_modules
-    environment:
-      BACKEND_BASE_URL: "http://localhost:5173"
-
   db:
     image: postgres:16-alpine
     volumes:

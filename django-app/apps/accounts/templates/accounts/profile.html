@@ -6,12 +6,6 @@
 {% block content %}
   <div class="text-center mt-30 md:mt-60">
     <p>Welcome to you profile page {{ user.username }}</p>
-    <p>You have {{ user.notes.count }}</p>
-    <p class="mt-5">
-      <a href="{% if DEBUG %}http://localhost:8000/api/dashboard{% else %}/api/dashboard{% endif %}"
-         class="link"
-         target="_blank">Api - Dashboard</a>
-    </p>
     <p class="mt-10">
       <a href="{% url 'accounts_logout_path' %}" class="btn-danger">Logout</a>
     </p>

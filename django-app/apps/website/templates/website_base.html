@@ -48,16 +48,16 @@
     {# django-debug-toolbar #}
     {% if debug %}
       <script>
-    if (typeof window.htmx !== "undefined") {
-      htmx.on("htmx:afterSettle", function (detail) {
-        if (
-          typeof window.djdt !== "undefined"
-          && detail.target instanceof HTMLBodyElement
-        ) {
-          djdt.show_toolbar();
+        if (typeof window.htmx !== "undefined") {
+          htmx.on("htmx:afterSettle", function (detail) {
+            if (
+              typeof window.djdt !== "undefined"
+              && detail.target instanceof HTMLBodyElement
+            ) {
+              djdt.show_toolbar();
+            }
+          });
         }
-      });
-    }
       </script>
     {% endif %}
   </body>

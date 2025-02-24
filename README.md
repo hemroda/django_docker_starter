@@ -12,7 +12,7 @@ A repo to kickstart your Django Project
 |         | HTML5      | Hetzner   |            |                    |       |
 |         |            |           |            |                    |       |
 
-## TODO
+### TODO
 
 Change:
 * Search and replace `your-url.com;` with your URL.
@@ -182,6 +182,12 @@ When creating the server:
     ⚠️ The other fields do not change
 
 ## PRODUCTION
+
+### TODO
+
+Before First deploy:
+
+* Search and replace `your-email@example.co` with your email.
 
 ### Deploying in Prod for updates
 
